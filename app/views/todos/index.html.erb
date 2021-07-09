@@ -1,0 +1,45 @@
+
+<h3>hello <%= @user.email %> </h3>
+
+<table class="table">
+
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Description</th>
+      <th scope="col">Due date</th>
+      <th scope="col">Done?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @user.todos.each do |todo|%>
+    <tr>
+      <th scope="row"> <% todo.id %> </th>
+      <td> <%= todo.title %> </td>
+      <td> <%= todo.description %> </td>
+      <td> <%= todo.due_date %> </td>
+      <td>
+      <%= form_for todo do |f| %>
+        <%= check_box_tag("name", "value", todo.done, class: "checkbox") %>
+        <%= f.check_box :done %>
+        <%= f.submit 'Complete' %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<h4>Add a task</h4>
+<div class="col-12 md-8">
+    <%= form_with model: @todo, remote: true do |f| %>
+        <%= f.label :title %>
+        <%= f.text_field :title, class: 'form-control' %>
+        <%= f.label :description %>
+        <%= f.text_field :description, class: 'form-control' %>
+        <%= f.label :due_date %>
+        <%= f.text_field :due_date, class: 'form-control' %>
+        <%= f.submit "Submit", class: " mt-2 btn btn-primary" %>
+    <% end %>
+</div>
